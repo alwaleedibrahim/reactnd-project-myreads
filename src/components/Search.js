@@ -1,8 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom' 
 import BooksGrid from './BooksGrid'
+import * as BooksAPI from '../api/BooksAPI'
 
 function Search () {
+
+    const [books, setBooks] = useState([])
+
+    function handleChange (e) {
+        e.preventDefault()
+        e.target.value && 
+        BooksAPI.search(e.target.value)
+        .then(data => data? setBooks(data) : setBooks([]))
+    }
     return (
         <div className="search-books">
             <div className="search-books-bar">
@@ -18,11 +28,11 @@ function Search () {
                     However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                     you don't find a specific author or title. Every search is limited by search terms.
                     */}
-                    <input type="text" placeholder="Search by title or author"/>
+                    <input type="text" placeholder="Search by title or author" onChange={handleChange}/>
                 </div>
             </div>
             <div className="search-books-results">
-                <BooksGrid books="" shelf="all"/>
+                {books[0]? <BooksGrid books={books} shelf="all"/> : <p>No Books Found</p>}
             </div>
         </div>
     )
