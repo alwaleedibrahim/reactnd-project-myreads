@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import * as BooksAPI from "../api/BooksAPI"
 
 function BookShelf(props) {
@@ -6,12 +6,8 @@ function BookShelf(props) {
     function handleSelect(e, book) {
         e.preventDefault()
         BooksAPI.update(book, e.target.value)
-        props.updateBooks()
+        .then(() => props.updateBooks())
     }
-
-    useEffect(() => {
-        props.updateBooks()
-    }, [])
 
     return (
         <div className="bookshelf">
