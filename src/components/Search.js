@@ -29,7 +29,7 @@ function Search () {
         .then(data => data? setBooks(data) : setBooks([])))
         : setBooks([])
         updateBooks()
-    }, [searchParams.savedBooks])
+    }, [searchParams])
 
     return (
         <div className="search-books">
